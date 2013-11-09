@@ -1,0 +1,17 @@
+body {
+  background-image: url(/images/bedge_grunge.png);
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.topButtons{
+	background-color: teal;
+	position: relative;
+	float:right;
+}
+#formInfo{
+	display:none;
+}
