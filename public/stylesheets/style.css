@@ -26,7 +26,9 @@ a {
 	display:none;
 }
 .container{
-	margin-top: 260px;
+	
+	background-color: white .6;
+	margin-top: 230px;
 
 }
 .users{
@@ -37,7 +39,7 @@ a {
 	vertical-align: middle;
 	max-height: 200px;
 	border: solid;
-	border-color: white;
+	border-color: #e6ece8;
 	border-width: 2px;
 }
 

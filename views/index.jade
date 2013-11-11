@@ -19,10 +19,30 @@ html
 				|Pet Peeves, Deal-breakers and other such annoyances in finding roommates are a thing of the past.Roomers will provide you 
 				|real people living or moving to the locations you are looking to move to.
 			p
-				img.users(src="/images/Emily.jpg") Emily 
+				img.users(src="/images/Emily.jpg")
+					.userEx
+						|Emily W. 
+						|Age: 19
+						|Lives: Denton,TX
+						|Moving to: London, England
 				img.users(src="/images/Kyle.jpg")
+					.userEx
+						|Kyle A.
+						|Age: 26
+						|Lives: San Diego, CA
+						|Moving to:  Sydney, Australia
 				img.users(src="/images/Eric.jpg")
+					.userEx
+						|Eric C. 
+						|Age:27
+						|Lives: Coranado Island, CA
+						|Moving to: 
 				img.users(src="/images/Brittnay.jpg")
+					.userEx
+						|Brittnay A. 
+						|Age:23
+						|Lives: Denton,Tx
+						|Moving to: New York City, New York
 
 			form#formInfo(role="form", method="post", action="/roomer")
 				input.form-group.form-control#name(placeholder="Full Name", name="name")
