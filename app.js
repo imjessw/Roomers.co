@@ -29,10 +29,10 @@ passport.use(new FacebookStrategy({
    callbackURL: config.fb.callbackURL
 },
 function(accessToken, refreshToken, profile, done) {
- process.nextTick(function () {
+ // this is where i should do a find one to determine if user exists currently
  	console.log(profile)
    return done(null, profile);
- });
+
 }
 ));
 
@@ -61,6 +61,7 @@ if ('development' == app.get('env')) {
 mongoose.connect('mongodb://localhost/roomer');
 var dummyUserID= "527c26321400f0f857000001"
 
+
 var roomersInfo= mongoose.model('roomer',{
 	oauthID: Number,
 	name: String,
@@ -70,7 +71,9 @@ var roomersInfo= mongoose.model('roomer',{
 	moveTo: String,
 	months: Number,
 	ageMin: Number,
-	ageMax: Number
+	ageMax: Number,
+	facebookId: Number,
+	gender: String
 
 });
 var roomerGet = function(req, res){
@@ -105,10 +108,14 @@ var roomerPost = function(req, res){
 	});
 };
 app.get('/', routes.index);
+app.get('moreinfo', function(req,res){
+	res.render("/moreinfo")
+})
 app.get('/users', user.list);
 app.get('/roomer',roomerGet);
 app.post('/roomer',roomerPost);
 app.get('/account', ensureAuthenticated, function(req, res){
+	console.log("LINE 118")
  res.render('account', { user: req.user });
 });
 app.get('/login', function(req, res){
@@ -116,14 +123,50 @@ app.get('/login', function(req, res){
 });
 
 app.get('/auth/facebook',
- passport.authenticate('facebook'),
-function(req, res){
-});
+	passport.authenticate('facebook'),
+	function(req, res){
+	});
 app.get('/auth/facebook/callback', 
- passport.authenticate('facebook', { failureRedirect: '/' }),
-function(req, res) {
- res.redirect('/account');
+	passport.authenticate('facebook', { failureRedirect: '/' }),
+	function(req, res) {
+	// figure out if hey already exist in the account then they get sent on new user
+	// if the unique id already exists
+	// use findOne to find the document in the database with a facebookId property equal to req.session.passport.user.id
+	roomersInfo.findOne({facebookId: req.session.passport.user.id}, function(err,user){
+		// if the user is in the db then
+		if(user){
+			res.redirect('/account');
+			
+		}
+		else{
+			var fbProfile= new roomersInfo({
+				name: req.session.passport.user.name,
+				live: req.session.passport.user.location,
+				gender: req.session.passport.user.gender
+			})
+			fbProfile.save(function(err){
+				console.log("redirecting")
+				res.redirect('/moreinfo')
+			})
+				// sve create new model for fb info look up in code
+				//create new route to send info to
+			 // 
+
+		}
+		// if user is equal to null
+		// redirect to /account
+		// else redirect to 
+		//create new route wi data i have already written
+		// .save a some point
+		console.log("checking passport",err,user)
+
+	});
+	// do a console.log of teh doc retreived from db
+	// pass it the unique id
+	console.log("session", req.session) 
+	
 });
+
 app.get('/logout', function(req, res){
  req.logout();
 res.redirect('/');
@@ -132,12 +175,7 @@ res.redirect('/');
 app.get('/roomerprofile',function(req, res){
 	res.send("this is where to go for editing your profile")
 })
-app.get('/searchrooms',function(req, res){
-	res.send("searching for avalible rooms")
-})
-app.get('/message',function(req, res){
-	res.send("messaging service between roomers")
-})
+
 app.get('/searchroomers',function(req,res){
 	console.log("BEFORE")
 	roomersInfo.findById(dummyUserID,function(err,user){
@@ -151,7 +189,7 @@ app.get('/searchroomers',function(req,res){
 // test authentication
 function ensureAuthenticated(req, res, next) {
  if (req.isAuthenticated()) { return next(); }
-res.redirect('/login')
+res.redirect('/')
 }
 
 http.createServer(app).listen(app.get('port'), function(){

@@ -11,7 +11,7 @@ html
 
 		button.btn.btn-default.topButtons#signInForm(type="submit") Sign In
 		button.btn.btn-default.topButtons#signUpForm(type="submit") Sign Up
-		a(href="/auth/facebook") Login via Facebook	
+		a.btn.btn-default.topButtons#FbLogin(type="submit",href="/auth/facebook") Login via Facebook	
 		.container
 			p We want awesome people to meet other awesome people and become awesome roommates. 
 				|We pair you with people match your needs and find you people that are relevant to you.
@@ -20,29 +20,29 @@ html
 				|real people living or moving to the locations you are looking to move to.
 			p
 				img.users(src="/images/Emily.jpg")
-				ul.userEx
-					li Emily W.				
-					li Age: 19
-					li Lives: Denton,TX       
-					li Moving to: London, England
 				img.users(src="/images/Kyle.jpg")
-				ul.userEx
-					li Kyle A.
-					li Age: 26
-					li Lives: San Diego, CA
-					li Moving to:  Sydney, Australia
 				img.users(src="/images/Eric.jpg")
-				ul.userEx
-					li Eric C. 
-					li Age:27
-					li Lives: Coranado Island, CA
-					li Moving to: 
 				img.users(src="/images/Brittnay.jpg")
-				ul.userEx
-					li Brittnay A. 
-					li Age:23
-					li Lives: Denton,Tx
-					li Moving to: New York City, New York
+			ul.userEx
+				li Emily W.				
+				li Age: 19
+				li Lives: Denton,TX       
+				li Moving to: London, England
+			ul.userEx
+				li Kyle A.
+				li Age: 26
+				li Lives: San Diego, CA
+				li Moving to:  Sydney, Australia
+			ul.userEx
+				li Eric C. 
+				li Age:27
+				li Lives: Coranado Island, CA
+				li Moving to: Dublin, Ireland
+			ul.userEx
+				li Brittnay A. 
+				li Age:23
+				li Lives: Denton,Tx
+				li Moving to: New York City, New York	
 
 			form#formInfo(role="form", method="post", action="/roomer")
 				input.form-group.form-control#name(placeholder="Full Name", name="name")
