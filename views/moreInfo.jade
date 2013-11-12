@@ -1,1 +1,10 @@
-p Hello need form for more info new users taht sign in
+p Hello need form for more info new users that sign in
+
+
+form#formInfo(role="form", method="post", action="/roomer")
+	input.form-group.form-control#age(placeholder="Age", name="age")
+	input.form-group.form-control#moveTo(placeholder="Where do you want to live?", name="moveTo")
+	input.form-group.form-control#months(placeholder="How long do you plan to stay in months?", name="months")
+	input.form-group.form-control#ageMin(placeholder="Minimum you want to live with?", name="ageMin")
+	input.form-group.form-control#ageMax(placeholder="Maximum age you want to live with?", name="ageMax")
+	button.btn.btn-default#subFormButton(type="submit") Submit

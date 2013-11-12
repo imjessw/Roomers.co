@@ -14,6 +14,25 @@ console.log(config)
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
+
+
+var app = express();
+
+// all environments
+app.set('port', process.env.PORT || 3001);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+app.use(express.cookieParser());
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.session({ secret: 'my_precious' }));
+app.use(passport.initialize());
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(passport.session());
+app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public')));
+
 // seralize and deseralize
 passport.serializeUser(function(user, done) {
  done(null, user);
@@ -35,23 +54,6 @@ function(accessToken, refreshToken, profile, done) {
 
 }
 ));
-
-var app = express();
-
-// all environments
-app.set('port', process.env.PORT || 3001);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.use(express.cookieParser());
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.session({ secret: 'my_precious' }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
    
 
 // development only
@@ -64,7 +66,8 @@ var dummyUserID= "527c26321400f0f857000001"
 
 var roomersInfo= mongoose.model('roomer',{
 	oauthID: Number,
-	name: String,
+	givenName: String,
+	familyName: String,
 	email: String,
 	age: Number,
 	currentLoc: String,
@@ -72,7 +75,7 @@ var roomersInfo= mongoose.model('roomer',{
 	months: Number,
 	ageMin: Number,
 	ageMax: Number,
-	facebookId: Number,
+	facebookId: String,
 	gender: String
 
 });
@@ -93,7 +96,8 @@ var roomerPost = function(req, res){
 		moveTo:req.body.moveTo,
 		months:req.body.months,
 		ageMin: req.body.ageMin,
-		ageMax: req.body.ageMax
+		ageMax: req.body.ageMax,
+		facebookId: req.body.facebookId
 	})	
 	console.log("req.body came through!", req.body.age)
 	roomerIndiv.save(function(err){
@@ -108,8 +112,8 @@ var roomerPost = function(req, res){
 	});
 };
 app.get('/', routes.index);
-app.get('moreinfo', function(req,res){
-	res.render("/moreinfo")
+app.get('/moreinfo', function(req,res){
+	res.render("moreinfo")
 })
 app.get('/users', user.list);
 app.get('/roomer',roomerGet);
@@ -140,13 +144,24 @@ app.get('/auth/facebook/callback',
 		}
 		else{
 			var fbProfile= new roomersInfo({
-				name: req.session.passport.user.name,
-				live: req.session.passport.user.location,
-				gender: req.session.passport.user.gender
+				givenName: req.session.passport.user.givenName ,
+				familyName: req.session.passport.user.familyName ,
+				currentLoc: req.session.passport.user.location ,
+				gender: req.session.passport.user.gender,
+				facebookId:req.session.passport.user.facebookId
 			})
-			fbProfile.save(function(err){
-				console.log("redirecting")
-				res.redirect('/moreinfo')
+			fbProfile.save(function(err,profile,numberAffected){
+				if(err){
+					console.log(err)
+					return res.send(500, "failed to save facbook profile")
+				}
+				else{
+					console.log(profile)
+					console.log(req.session.passport.user.name)
+					console.log(numberAffected)
+					console.log("redirecting")
+					res.redirect('/moreinfo')
+				}
 			})
 				// sve create new model for fb info look up in code
 				//create new route to send info to
@@ -176,9 +191,11 @@ app.get('/roomerprofile',function(req, res){
 	res.send("this is where to go for editing your profile")
 })
 
-app.get('/searchroomers',function(req,res){
-	console.log("BEFORE")
-	roomersInfo.findById(dummyUserID,function(err,user){
+app.get('/searchRoomers',function(req,res){
+	console.log(req.user.id)
+	console.log("BEFORE!!!!!!!!")
+	// console.log(req.user.fb.clientID)
+	roomersInfo.findOne({facebookId:req.user.id}, function(err, user){
 		console.log("AFTER",err,user)
 		roomersInfo.find({age:{$gte:user.ageMin}}, function(err, roomers){
 			console.log("AHAHAHAHAH!",err, roomers)
@@ -186,6 +203,7 @@ app.get('/searchroomers',function(req,res){
 		})
 	})
 })
+
 // test authentication
 function ensureAuthenticated(req, res, next) {
  if (req.isAuthenticated()) { return next(); }

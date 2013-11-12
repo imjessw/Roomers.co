@@ -9,8 +9,8 @@ html
 		ul 
 			for indiv in roomerIndiv
 				li 
-					|Name: #{indiv.name}, Age: #{indiv.age}, Current Location: #{indiv.currentLoc}, 
-					|Wants to move to: #{indiv.moveTo}, Months staying:#{indiv.months}
+					|Name: #{indiv.givenName} #{indiv.familyName} Age: #{indiv.age}  Current Location: #{indiv.currentLoc}, 
+					//- |Wants to move to: #{indiv.moveTo} Months staying:#{indiv.months} Ideal Roomer Age: #{indiv.ageMin} - #{indiv.agemax}
 
 	
 	script(src="http://code.jquery.com/jquery-1.10.1.min.js")
