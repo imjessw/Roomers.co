@@ -86,6 +86,8 @@ var roomerGet = function(req, res){
 	// step 1 find all roomers
 	// in the callback call res. render on index view and pass it retieved roomers (what is currently in the db)
 }
+
+
 var roomerPost = function(req, res){ 
 	var appdata=req.body;
 	var roomerIndiv= new roomersInfo({
@@ -112,8 +114,26 @@ var roomerPost = function(req, res){
 	});
 };
 app.get('/', routes.index);
-app.get('/moreinfo', function(req,res){
+app.get('/moreinfo',ensureAuthenticated, function(req,res){
 	res.render("moreinfo")
+})
+// database callbacks take err and data
+// route handlers take req and res
+app.post("/moreinfo",ensureAuthenticated,function(req, res){
+	// roomersInfo.findOne({facebookId: req.session.passport.user.id},function(err,data){
+	// 	console.log("ERROR AND DATA FB ID", err,data)	
+
+	roomersInfo.update({facebookId: req.session.passport.user.id},{
+		age: req.body.age,
+		moveTo: req.body.moveTo,
+		months: req.body.months,
+		ageMin: req.body.ageMin,
+		ageMax: req.body.ageMax
+		},{upsert : true}, function(err,data){
+			res.redirect("/searchroomers")
+	})
+	
+	// })
 })
 app.get('/users', user.list);
 app.get('/roomer',roomerGet);
@@ -198,7 +218,8 @@ app.get('/searchRoomers', ensureAuthenticated, function(req,res){
 	// console.log(req.user.fb.clientID)
 	roomersInfo.findOne({facebookId:req.session.passport.user.id}, function(err, user){
 		console.log("AFTER",err,user)
-		roomersInfo.find({age:{$gte:user.ageMin}}, function(err, roomers){
+		console.log(user.ageMin)
+		roomersInfo.find({age:{$gte: user.ageMin || 0}}, function(err, roomers){
 			console.log("AHAHAHAHAH!",err, roomers)
 			res.render("searchRoomers",{roomerIndiv: roomers})
 		})
