@@ -68,6 +68,7 @@ var roomersInfo= mongoose.model('roomer',{
 	oauthID: Number,
 	givenName: String,
 	familyName: String,
+	name: String,
 	email: String,
 	age: Number,
 	currentLoc: String,
@@ -91,6 +92,8 @@ var roomerGet = function(req, res){
 var roomerPost = function(req, res){ 
 	var appdata=req.body;
 	var roomerIndiv= new roomersInfo({
+		givenName: req.body.givenName,
+		familyName: req.body.familyName,
 		name:req.body.name,
 		email:req.body.email,
 		age:req.body.age,
@@ -99,6 +102,7 @@ var roomerPost = function(req, res){
 		months:req.body.months,
 		ageMin: req.body.ageMin,
 		ageMax: req.body.ageMax,
+		gender: req.body.gender
 		
 	})	
 	console.log("req.body came through!", req.body.age)
@@ -163,11 +167,14 @@ app.get('/auth/facebook/callback',
 			res.redirect('/account');
 			
 		}
+
 		else{
+			console.log(req.session.passport.user)
 			var fbProfile= new roomersInfo({
-				givenName: req.session.passport.user.givenName ,
-				familyName: req.session.passport.user.familyName ,
-				currentLoc: req.session.passport.user.location ,
+				givenName: req.session.passport.user.name.givenName ,
+				familyName: req.session.passport.user.name.familyName ,
+				name: req.session.passport.user.name,
+				currentLoc: req.session.passport.user._json.location.name ,
 				gender: req.session.passport.user.gender,
 				facebookId:req.session.passport.user.id
 			})
