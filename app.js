@@ -97,7 +97,7 @@ var roomerPost = function(req, res){
 		months:req.body.months,
 		ageMin: req.body.ageMin,
 		ageMax: req.body.ageMax,
-		facebookId: req.body.facebookId
+		
 	})	
 	console.log("req.body came through!", req.body.age)
 	roomerIndiv.save(function(err){
@@ -133,6 +133,7 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback', 
 	passport.authenticate('facebook', { failureRedirect: '/' }),
 	function(req, res) {
+
 	// figure out if hey already exist in the account then they get sent on new user
 	// if the unique id already exists
 	// use findOne to find the document in the database with a facebookId property equal to req.session.passport.user.id
@@ -148,7 +149,7 @@ app.get('/auth/facebook/callback',
 				familyName: req.session.passport.user.familyName ,
 				currentLoc: req.session.passport.user.location ,
 				gender: req.session.passport.user.gender,
-				facebookId:req.session.passport.user.facebookId
+				facebookId:req.session.passport.user.id
 			})
 			fbProfile.save(function(err,profile,numberAffected){
 				if(err){
@@ -191,11 +192,11 @@ app.get('/roomerprofile',function(req, res){
 	res.send("this is where to go for editing your profile")
 })
 
-app.get('/searchRoomers',function(req,res){
-	console.log(req.user.id)
+app.get('/searchRoomers', ensureAuthenticated, function(req,res){
+	console.log(req.session.passport)
 	console.log("BEFORE!!!!!!!!")
 	// console.log(req.user.fb.clientID)
-	roomersInfo.findOne({facebookId:req.user.id}, function(err, user){
+	roomersInfo.findOne({facebookId:req.session.passport.user.id}, function(err, user){
 		console.log("AFTER",err,user)
 		roomersInfo.find({age:{$gte:user.ageMin}}, function(err, roomers){
 			console.log("AHAHAHAHAH!",err, roomers)
