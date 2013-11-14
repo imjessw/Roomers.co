@@ -159,9 +159,9 @@ app.post("/moreinfo",ensureAuthenticated,function(req, res){
 app.get('/users', user.list);
 app.get('/roomer',roomerGet);
 app.post('/roomer',roomerPost);
-app.get('/account', ensureAuthenticated, function(req, res){
+app.get('/roomerprofile', ensureAuthenticated, function(req, res){
 	console.log("LINE 118")
- res.render('account', { user: req.user });
+ res.render('roomerprofile', { user: req.user });
 });
 app.get('/login', function(req, res){
  res.render('login', { user: req.user });
