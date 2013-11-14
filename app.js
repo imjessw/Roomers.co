@@ -74,7 +74,10 @@ function(accessToken, refreshToken, profile, done) {
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-mongoose.connect('mongodb://localhost/roomer');
+
+// fix for url to use mongohq
+var mongoUrl = process.env.MONGOHQ_URL || 'mongodb://localhost/roomer';
+mongoose.connect(mongoUrl);
 var dummyUserID= "527c26321400f0f857000001"
 
 
