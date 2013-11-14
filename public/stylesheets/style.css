@@ -22,7 +22,8 @@ a {
 	position: relative;
 	display: inherit;
 	float:right;
-	margin-left: 400px;
+	top: -230px;
+	
 }
 #formInfo{
 	display:none;
