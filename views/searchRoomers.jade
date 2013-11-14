@@ -3,16 +3,22 @@ html
 	head
 		link(rel='stylesheet', type='text/css', href='http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css')
 		link(href='http://fonts.googleapis.com/css?family=Prosto+One' rel='stylesheet' type='text/css')
-		//- link(rel="stylesheet", type="text/css", href="/stylesheets/style.css")	
+		link(rel="stylesheet", type="text/css", href="/stylesheets/searchRoomers.css")	
 	body
+		
+		- var avatars= ["/images/jessprofilepic.jpg","/images/Darya-Pino-Rose.jpg", "/images/brit.jpg", "/images/MarissaMayer.jpg","/images/ElonMusk.jpg","/images/kevin_rose.jpg" ]
+		- var i=0
+		h1 Your Matches
+		.container
+			ul
+				for indiv in roomerIndiv
 
-		ul
-			for indiv in roomerIndiv
-				li 
-					|Name: #{indiv.givenName} #{indiv.name}#{indiv.familyName} Age: #{indiv.age}     Gender: #{indiv.gender}
-					br
-					|Current Location: #{indiv.currentLoc} Wants to move to: #{indiv.moveTo} Months staying:#{indiv.months} 
-
+					li.info
+						img.av(src="#{avatars[i]}")
+						|Name: #{indiv.givenName} #{indiv.name}#{indiv.familyName} Age: #{indiv.age}     
+						br
+						|Current Location: #{indiv.currentLoc} Wants to move to: #{indiv.moveTo} Months staying:#{indiv.months} 
+						- i++
 	
 	script(src="http://code.jquery.com/jquery-1.10.1.min.js")
 	script(src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")

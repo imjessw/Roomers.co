@@ -3,9 +3,16 @@ html
 	head
 		link(rel='stylesheet', type='text/css', href='http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css')
 		link(href='http://fonts.googleapis.com/css?family=Radley', rel='stylesheet' type='text/css')
-		link(rel="stylesheet", type="text/css", href="/stylesheets/style.css")
+		link(rel="stylesheet", type="text/css", href="/stylesheets/roomerprofile.css")
 
 	body
 			a.btn.btn-default.topButtons#finfRoomers(type="submit",href="/searchRoomers") Find Roomers
+			H1 Your Roomer Profile
+			img.users(src="/images/jessprofilepic.jpg")
+				|Name: #{indiv.givenName} #{indiv.name}#{indiv.familyName} Age: #{indiv.age}     Gender: #{indiv.gender}
+				br
+				|Current Location: #{indiv.currentLoc} Wants to move to: #{indiv.moveTo} Months staying:#{indiv.months} 
+		
+
 	script(src="http://code.jquery.com/jquery-1.10.1.min.js")
 	script(src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")

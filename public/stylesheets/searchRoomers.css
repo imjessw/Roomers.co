@@ -1,0 +1,23 @@
+body{
+	background-color: #86c351;
+}
+.av{
+	
+	display: inherit;
+	border-radius: 100%;
+	width: 200px;
+	height: 200px;
+	border: solid;
+	border-color: #e6ece8;
+	border-width: 2px;
+}
+.info{
+	padding: 15px;
+	list-style: none;
+}
+.container{
+	background-color: white .5;
+}
+h1{
+	text-align: center;
+}
