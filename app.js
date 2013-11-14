@@ -9,11 +9,25 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var mongoose= require('mongoose');
-var config = require('./oauth.js');
+// var config = require('./oauth.js');
 console.log(config)
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
+// fancy new oauth stuff
+var config;
+if(process.env.FACEBOOK_API_ID){
+	//this will use the process env
+	config = {
+		fb: {
+		  clientID: process.env.FACEBOOK_API_ID,
+		  clientSecret: process.env.FACEBOOK_API_SECRET,
+		  callbackURL: process.env.FACEBOOK_API_CALLBACK
+		}
+	};
+} else {
+	config = require('./oauth');
+}
 
 
 var app = express();
