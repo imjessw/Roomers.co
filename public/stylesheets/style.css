@@ -11,7 +11,7 @@ body {
     left: 0;
 }
 p{
-	margin-top: 10px;
+	margin-top: 50px;
 }
 }
 a {
@@ -20,7 +20,9 @@ a {
 .topButtons{
 	background-color: #86c351;
 	position: relative;
+	display: inherit;
 	float:right;
+	margin-left: 400px;
 }
 #formInfo{
 	display:none;
@@ -36,7 +38,9 @@ a {
 	margin-left: 90px;
 	display: inherit;
 	border-radius: 100%;
-	vertical-align: middle;
+	margin-bottom: 40px;
+	padding: 15px;
+	
 	max-height: 200px;
 	border: solid;
 	border-color: #e6ece8;
@@ -44,6 +48,8 @@ a {
 }
 
 ul{
+	list-style: none;
+	display: block;
 	margin-left: 300px;
-	margin-top: 80px;
+	margin-top: -160px;
 }

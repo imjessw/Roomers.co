@@ -9,7 +9,7 @@ html
 		ul
 			for indiv in roomerIndiv
 				li 
-					|Name: #{indiv.givenName} #{indiv.familyName} Age: #{indiv.age}     Gender: #{indiv.gender}
+					|Name: #{indiv.givenName} #{indiv.name}#{indiv.familyName} Age: #{indiv.age}     Gender: #{indiv.gender}
 					br
 					|Current Location: #{indiv.currentLoc} Wants to move to: #{indiv.moveTo} Months staying:#{indiv.months} 
 
