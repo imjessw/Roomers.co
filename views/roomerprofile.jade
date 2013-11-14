@@ -8,11 +8,19 @@ html
 	body
 			a.btn.btn-default.topButtons#finfRoomers(type="submit",href="/searchRoomers") Find Roomers
 			H1 Your Roomer Profile
-			img.users(src="/images/jessprofilepic.jpg")
-				|Name: #{indiv.givenName} #{indiv.name}#{indiv.familyName} Age: #{indiv.age}     Gender: #{indiv.gender}
-				br
-				|Current Location: #{indiv.currentLoc} Wants to move to: #{indiv.moveTo} Months staying:#{indiv.months} 
-		
+			ul
+					for indiv in roomerIndiv
+				img.users(src="/images/jessprofilepic.jpg")
+					|Name: #{indiv.givenName} #{indiv.name}#{indiv.familyName} Age: #{indiv.age}     Gender: #{indiv.gender}
+					br
+					|Current Location: #{indiv.currentLoc} Wants to move to: #{indiv.moveTo} Months staying:#{indiv.months} 
+			H2 Deal Breakers
+			p My deal breakers are: People who don't love dogs and listeners of Nickleback
+
+			H3 Pet Peeves
+			p My Pet Peeves are: Dirty dishes and unclean bathrooms
+
+
 
 	script(src="http://code.jquery.com/jquery-1.10.1.min.js")
 	script(src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")

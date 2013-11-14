@@ -233,7 +233,7 @@ res.redirect('/');
 });
 
 app.get('/roomerprofile',function(req, res){
-	res.send("this is where to go for editing your profile")
+	res.render("roomerprofile",{roomerIndiv: roomers})
 })
 
 app.get('/searchRoomers', ensureAuthenticated, function(req,res){
