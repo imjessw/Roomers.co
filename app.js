@@ -159,9 +159,9 @@ app.post("/moreinfo",ensureAuthenticated,function(req, res){
 app.get('/users', user.list);
 app.get('/roomer',roomerGet);
 app.post('/roomer',roomerPost);
-app.get('/roomerprofile', ensureAuthenticated, function(req, res){
+app.get('/account', ensureAuthenticated, function(req, res){
 	console.log("LINE 118")
- res.render('roomerprofile', { user: req.user });
+ res.render('account', { user: req.user });
 });
 app.get('/login', function(req, res){
  res.render('login', { user: req.user });
@@ -181,7 +181,7 @@ app.get('/auth/facebook/callback',
 	roomersInfo.findOne({facebookId: req.session.passport.user.id}, function(err,user){
 		// if the user is in the db then
 		if(user){
-			res.redirect('/account');
+			res.redirect('/roomerprofile');
 			
 		}
 
@@ -233,7 +233,10 @@ res.redirect('/');
 });
 
 app.get('/roomerprofile',function(req, res){
-	res.render("roomerprofile",{roomerIndiv: roomers}) //help!
+	roomersInfo.findOne({facebookId:req.session.passport.user.id}, function(err, user){
+			res.render("roomerprofile",{roomerIndiv: user})
+	
+	})
 })
 
 app.get('/searchRoomers', ensureAuthenticated, function(req,res){

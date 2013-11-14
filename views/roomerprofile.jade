@@ -8,13 +8,12 @@ html
 	body
 			a.btn.btn-default.topButtons#finfRoomers(type="submit",href="/searchRoomers") Find Roomers
 			H1 Your Roomer Profile
-			ul
-					for indiv in roomerIndiv
 				img.users(src="/images/jessprofilepic.jpg")
-					|Name: #{indiv.givenName} #{indiv.name}#{indiv.familyName} Age: #{indiv.age}     Gender: #{indiv.gender}
-					br
-					|Current Location: #{indiv.currentLoc} Wants to move to: #{indiv.moveTo} Months staying:#{indiv.months} 
-			H2 |Bio:
+
+			p	Name: Jessica Waite Age: 22  
+				br
+				|Current Location: Boulder, CO Wants to move to: New York, New York Months staying: 6  
+			H2 Bio:
 				br
 				|I am a tech geek who spends most of her time on a computer or at a social gathering
 				|I have an awesome dog named after a Seinfeld reference. She is as awesome as her name.

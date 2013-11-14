@@ -7,8 +7,12 @@
 	border-color: #e6ece8;
 }
 .topButtons{
-		background-color: #86c351;
+	background-color: #86c351;
 	position: relative;
 	display: inherit;
 	float:right;
+}
+body{
+	background-color:#a0d077;
+	margin:50px;
 }
